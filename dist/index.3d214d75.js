@@ -588,14 +588,30 @@ const redux = require("bc2abf517e55691d");
 const reducerfunction = (state = {
     counter: 0
 }, action)=>{
-    if (action.type === "increment") return {
-        ...state,
-        counter: state.counter + action.payload
-    };
-    else if (action.type === "decrement") return {
-        ...state,
-        counter: state.counter - action.payload
-    };
+    switch(action.type){
+        case "increment":
+            return {
+                ...state,
+                counter: state.counter + 1
+            };
+        case "decrement":
+            return {
+                ...state,
+                counter: state.counter - 1
+            };
+        case "incrementBy":
+            return {
+                ...state,
+                counter: state.counter + action.payload
+            };
+        case "decrementBy":
+            return {
+                ...state,
+                counter: state.counter - action.payload
+            };
+        default:
+            return state;
+    }
 };
 const store = redux.createStore(reducerfunction);
 const counterSubscriber = ()=>{
@@ -604,11 +620,17 @@ const counterSubscriber = ()=>{
 };
 store.subscribe(counterSubscriber);
 store.dispatch({
-    type: "increment",
+    type: "increment"
+});
+store.dispatch({
+    type: "decrement"
+});
+store.dispatch({
+    type: "incrementBy",
     payload: 2
 });
 store.dispatch({
-    type: "decrement",
+    type: "decrementBy",
     payload: 5
 });
 
@@ -950,6 +972,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["km5uZ","bB7Pu"], "bB7Pu", "parcelRequire94c2")
+},{}]},["km5uZ","bB7Pu"], "bB7Pu", "parcelRequirece54")
 
 //# sourceMappingURL=index.3d214d75.js.map
